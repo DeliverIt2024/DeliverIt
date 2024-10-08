@@ -11,7 +11,7 @@
 Allows users to incorperate location, preference, and budget in order to find an ideal meal for the day. Users can also interact with one another and share reccomended locations and restaurants based on what meals they have had while using DeliverIt.
 
 ## App Evaluation
-- Category: Food and Bevarage/ Delivery & Customer Service
+- Category: Food and Bevarage / Delivery / Customer Service
 - Story: Using information provided by the user, DeliverIt successfully finds restaurants in the location of user, reccomending them meals, and showing other users in the area that have 
   similiar preferences.
 - Market: This app can be used by any person looking for a meal for whatever time of day.
