@@ -6,16 +6,19 @@
 
 3. Wireframes
 # Overview
-Comment
-Description
-Tracks what music an individual listens to, and pairs them with others based on that music. Could be potentially used as a dating app, or just meeting new friends with similar music tastes.
 
-App Evaluation
-Category: Social Networking / Music
-Story: Analyzes users music choices, and connects them to other users with similar choices. The user can then decide to message this person and befriend them if wanted.
-Market: Any individual could choose to use this app, and to keep it a safe environment, people would be organized into age groups.
-Habit: This app could be used as often or unoften as the user wanted depending on how deep their social life is, and what exactly they're looking for.
-Scope: First we would start with pairing people based on music taste, then perhaps this could evolve into a music sharing application as well to broaden its usage. Large potential for use with spotify, apple music, or other music streaming applications.
+## Description
+Allows users to incorperate location, preference, and budget in order to find an ideal meal for the day. Users can also interact with one another and share reccomended locations and restaurants based on what meals they have had while using DeliverIt.
+
+## App Evaluation
+- Category: Food and Bevarage/ Delivery & Customer Service
+- Story: Using information provided by the user, DeliverIt successfully finds restaurants in the location of user, reccomending them meals, and showing other users in the area that have 
+  similiar preferences.
+- Market: This app can be used by any person looking for a meal for whatever time of day.
+- Habit: This app can be used whenever a user would look and will be avaliabe 24/7 based on the hours of operations of any location.
+- Scope: Everyone has ran into a time where they cannot figure out for the life of them what they are going to eat. With DeliverIt, not only is the stress of finding a resturant 
+  resolved, but the hassle of figuring out a specific meal for a certain place is eliminated as well. For any dinning establishment you choose, DeliverIt will provide the most pouplar 
+  item on the menu and show you the meals and reviews of others that have ordered at that same establishment.
 # Product Spec
 ## 1. User Stories (Required and Optional)
 Comment
