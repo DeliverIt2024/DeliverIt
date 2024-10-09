@@ -24,10 +24,12 @@ Allows users to incorperate location, preference, and budget in order to find an
 Comment
 ### Required Must-have Stories
 
-- User logs in to access previous chats and preference settings
-- User picks what their favorite artist/genre/etc. (Think Spotify interface)
-- Matches have a chat window to get to know each other, with the ability to skip music and unmatch (Tinder Style).
-- Profile pages for each user
+- User logs in to access current avaliable restaurants, meals, and popular 
+  reccomendations.
+- User begins an order from a reccomendation or an avaliable restaurant.
+- User is able to add other users as friends and share favorite meals and 
+  restaurant locations with one another.
+- Profile pages for each user.
 - Settings (Accesibility, Notification, General, etc.)
 
 ### Optional Nice-to-have Stories
