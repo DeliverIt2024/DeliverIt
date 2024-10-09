@@ -81,5 +81,7 @@ Optional:
 - Profile -> Text field or photo to be modified. A second option is to see friends and interact with friends.
 - Settings -> Toggle settings
 # Wireframes
-//picture
+![IMG_7917](https://github.com/user-attachments/assets/63ea8686-82c6-415a-9f8f-7f745f4a5b11)
+
 ## Digital Wireframes & Mockups
+![Untitled (4)](https://github.com/user-attachments/assets/9cf1e8b7-a4c9-4fb2-859b-a72c001c9006)
