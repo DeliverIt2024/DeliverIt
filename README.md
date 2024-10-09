@@ -34,11 +34,12 @@ Comment
 
 ### Optional Nice-to-have Stories
 
-- Log of past songs/people with album art covers matching
-- Page of most played songs (i.e. songs that most users are connecting through)
-- Profile Add-On: Top music choices, etc.
-- Optional Shuffle Button (i.e. random encounter/random song)
-- Listening/Encounter Queue
+- Budget history for each order at each restaurant.
+- Re-Order Button.
+- Multiple payment method options (up to 8).
+- Multiple saved locations for when traveling from one city to another.
+- Food category reccomendations during the search process.
+
 ## 2. Screens
 - Login
 - Register - User signs up or logs into their account
