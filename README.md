@@ -44,38 +44,42 @@ Comment
 - Login
 - Register - User signs up or logs into their account
   -- Upon Download/Reopening of the application, the user is prompted to log in to 
-    gain access to their profile information to be properly matched with another 
-    person.
-
-- Messaging Screen - Chat for users to communicate (direct 1-on-1)
-    -- Upon selecting music choice users matched and message screen opens
+    gain access to their profile information to be properly recommended restaurants based on their information.
+- Friends Screen - For users to communicate and connect with other users (direct 1-on-1)
+    -- Allows users to add friends, chat with friends, and discover friends.
 - Profile Screen
-    -- Allows user to upload a photo and fill in information that is interesting 
-       to them and others
-- Song Selection Screen.
-    -- Allows user to be able to choose their desired song, artist, genre of 
-       preference and begin listening and interacting with others.
+    -- Allows user to upload a photo and fill in information that can be used to connect them to others and recommend restaurants.
+- Restaurant Recommendations Screen.
+    -- Will serve as the home screen for the user where they are recommended new or old restaurants based on a number of factors.
+- Order Screen
+    -- The screen that the user experiences when they start and finish placing their order from the restaurant of their choosing.
+- Search Screen
+    -- A screen where users can manually search for restaurants.
+- Map Screen
+    -- A screen where the user can look for restaurants near their location or in a location of their choosing.
 - Settings Screen
-    -- Lets people change language, and app notification settings.
+    -- Lets people customize accessibility, customize in-app experience, and app notification settings.
 
 ## 3. Navigation
 ### Tab Navigation (Tab to Screen)
 
-- Music selection
+- Home 
 - Profile
 - Settings
+- Map
+- Search
 
 Optional:
-
-- Music/Encounter Queue
-- Discover (Top Choices)
+- Discover (Top Choices of friends)
 
 ### Flow Navigation (Screen to Screen)
 
 - Forced Log-in -> Account creation if no log in is available
-- Music Selection (Or Queue if Optional) -> Jumps to Chat
-- Profile -> Text field to be modified.
+- Home (optionally Discover top choices of friends) -> Gets taken to a page of recommendations for restaurants.
+- Map -> shows the current general area of users with the restaurants in the area.
+- Search -> takes user to search for restaurants manually.
+- Profile -> Text field or photo to be modified. A second option is to see friends and interact with friends.
 - Settings -> Toggle settings
 # Wireframes
 //picture
-# Digital Wireframes & Mockups
+## Digital Wireframes & Mockups
