@@ -1,10 +1,10 @@
 # DeliverIt
 # Table of Contents
-1. Overview
+1. [Overview](#overview)
 
-2. Product Spec
+2. [Product Spec](#product-spec)
 
-3. Wireframes
+3. [WireFrames](#wireframes)
 # Overview
 
 ## Description
