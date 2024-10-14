@@ -5,6 +5,8 @@
 2. [Product Spec](#product-spec)
 
 3. [WireFrames](#wireframes)
+  
+4. [Schema](#schema)
 # Overview
 
 ## Description
@@ -85,3 +87,39 @@ Optional:
 
 ## Digital Wireframes & Mockups
 ![Untitled (4)](https://github.com/user-attachments/assets/9cf1e8b7-a4c9-4fb2-859b-a72c001c9006)
+
+## Schema
+### Models
+*Users*
+| Field Name      | Type    | Description                                          |
+|-----------------|---------|------------------------------------------------------|
+| `userId`        | String  | Unique identifier for the user.                      |
+| `email`         | String  | User’s email address.                                |
+| `name`          | String  | User's full name.                                    |
+| `address`       | Object  | User’s shipping address (street, city, postal code). |
+| `phoneNumber`   | String  | Contact number of the user.                          |
+| `friends`       | Array   | List of users the user has friended                  |
+*Restaurants*
+| Field Name      | Type    | Description                                          |
+|-----------------|---------|------------------------------------------------------|
+| `restaurantId`  | String  | Unique identifier for the Restaurant.                |
+| `email`         | String  | Restaurant’s email address.                          |
+| `name`          | String  | Restaurant's full name.                              |
+| `address`       |Geopoint | Restaurant’s address                                 |
+| `phoneNumber`   | String  | Contact number of the Restaurant.                    |
+| `menu`          | Array   |List of items on the menu to include prices, names, and descriptions.|
+| `rating`        | Double  | a rating of a restauarant ranging from to 5.         |
+*Menu items*
+| Field Name      | Type    | Description                                          |
+|-----------------|---------|------------------------------------------------------|
+| `itemId`        | String  | Unique identifier for the menu item.                 |
+| `price`         | Double  | price of the menu item.                              |
+| `name`          | String  | Name of the menu item.                               |
+| `Description`   | String  | Description of the menu item.                        |
+| `Category`      | String  | Category the menu item belongs to in the menu.       |
+| `role`          | String  | Role of the user (e.g., delivery driver or customer).|
+*Users restaurant*
+| Field Name      | Type    | Description                                          |
+|-----------------|---------|------------------------------------------------------|
+| `userId`        | String  | Reference to connect the table to a user.            |
+| `restaurants`   | Array   |List of restaurants the user frequents or rated highly.|
