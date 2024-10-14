@@ -121,7 +121,6 @@ Optional:
 | `name`          | String  | Name of the menu item.                               |
 | `Description`   | String  | Description of the menu item.                        |
 | `Category`      | String  | Category the menu item belongs to in the menu.       |
-| `role`          | String  | Role of the user (e.g., delivery driver or customer).|
 
 *Users restaurant*
 
@@ -129,3 +128,24 @@ Optional:
 |-----------------|---------|------------------------------------------------------|
 | `userId`        | String  | Reference to connect the table to a user.            |
 | `restaurants`   | Array   |List of restaurants the user frequents or rated highly.|
+
+*Delivery Driver*
+
+| Field Name      | Type    | Description                                          |
+|-----------------|---------|------------------------------------------------------|
+| `ddId`        | String  | Unique identifier for the DD.                          |
+| `email`         | String  | DD’s email address.                                  |
+| `name`          | String  | DD's full name.                                      |
+| `position`      |Geopoint | DD's current location if en route to a delivery.     |
+| `phoneNumber`   | String  | Contact number of the DD.                            |
+| `order`         | Object  | A reference to the order the DD is currently assigned to.|
+
+*Orders*
+
+| Field Name      | Type    | Description                                          |
+|-----------------|---------|------------------------------------------------------|
+| `orderId`       | String  | Unique identifier for the order.                     |
+| `userId`        | String  | Reference to the user's Id that the order belong to. |
+| `items`         | Array   | list of items in the order.                          |
+| `address`       |Geopoint | Address of the user that the order is being sent to. |
+| `phoneNumber`   | String  | phone number of the user the order is being sent to. |
