@@ -99,7 +99,9 @@ Optional:
 | `address`       | Object  | User’s shipping address (street, city, postal code). |
 | `phoneNumber`   | String  | Contact number of the user.                          |
 | `friends`       | Array   | List of users the user has friended                  |
+
 *Restaurants*
+
 | Field Name      | Type    | Description                                          |
 |-----------------|---------|------------------------------------------------------|
 | `restaurantId`  | String  | Unique identifier for the Restaurant.                |
@@ -109,7 +111,9 @@ Optional:
 | `phoneNumber`   | String  | Contact number of the Restaurant.                    |
 | `menu`          | Array   |List of items on the menu to include prices, names, and descriptions.|
 | `rating`        | Double  | a rating of a restauarant ranging from to 5.         |
+
 *Menu items*
+
 | Field Name      | Type    | Description                                          |
 |-----------------|---------|------------------------------------------------------|
 | `itemId`        | String  | Unique identifier for the menu item.                 |
@@ -118,7 +122,9 @@ Optional:
 | `Description`   | String  | Description of the menu item.                        |
 | `Category`      | String  | Category the menu item belongs to in the menu.       |
 | `role`          | String  | Role of the user (e.g., delivery driver or customer).|
+
 *Users restaurant*
+
 | Field Name      | Type    | Description                                          |
 |-----------------|---------|------------------------------------------------------|
 | `userId`        | String  | Reference to connect the table to a user.            |
