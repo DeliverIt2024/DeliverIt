@@ -151,3 +151,7 @@ Optional:
 | `phoneNumber`   | String  | phone number of the user the order is being sent to. |
 
 ### Networking
+#### List of Network Request by Screen
+- Home Screen
+  -- (Read/GET) Query all orders where user is customer.
+  
