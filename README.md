@@ -149,3 +149,5 @@ Optional:
 | `items`         | Array   | list of items in the order.                          |
 | `address`       |Geopoint | Address of the user that the order is being sent to. |
 | `phoneNumber`   | String  | phone number of the user the order is being sent to. |
+
+### Networking
