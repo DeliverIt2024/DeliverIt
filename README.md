@@ -154,24 +154,30 @@ Optional:
 #### List of Network Request by Screen
 - Home Screen
    - (Read/GET) Query all orders where user is customer.
- |----------------------------------------------------------------------------------|
- |  let query = PFQuery(className: "Order")                                         |
- |  query.whereKey("customer", equalTo: currentUser)                                |
- |  query.order(byDescending: "createdAt")                                          |
- |  query.findObjectsInBackground { (orders: [PFObject]?, error: Error?) in         |
- |     if let error = error                                                         |
- |     {                                                                            |
- |         print("Error fetching orders: \(error.localizedDescription)")            |
- |     }                                                                            |
- |     else if let orders = orders                                                  |
- |     {                                                                            |
- |       print("Successfully retrieved \(orders.count) orders.")                    |
- |       for order in orders {                                                      |
- |           if let restaurantName = order["restaurantName"] as? String,            |
- |              let status = order["status"] as? String {                           |
- |               print("Order from \(restaurantName) - Status: \(status)")          |
- |      }                                                                           |
- |    }                                                                             |
- |----------------------------------------------------------------------------------|
-     
+ ![image](https://github.com/user-attachments/assets/0356a3cc-cfaa-4027-9e1a-f6b8986bf39b)
+
+   - (Create/ORDER) Create a new order and add it to cart
+   - (Delete) Delete existing order from cart
+   - (Create/ORDER) Add a new item to existing order
+   - (Delete) Delete existing item in an order
+- Create Checkout Screen
+  - (Create/ORDER) Create a checkout request based on your cart.
+- Profile Screen
+  - (Read/GET) Query logged in user
+  - (Update/PUT) Update user order history
+ 
+### [IF EXISTS:] Existing API Endpoints
+#### An API of allset
+| HTTP Verb | Endpoint                  | Description                                |
+|-----------|---------------------------|--------------------------------------------|
+|    GET    | /restaurants              | Get all restaurants.                       |
+|    GET    | /restaurants/byId/:id     | Get a specific restaurant by id.           |
+|    GET    | /location                 | Get all locations.                         |
+|    GET    | /location/byId/:id        | Get a specific location by id.             |
+|    GET    | /user                     | Get all users.                             |
+|    GET    | /user/byId/:id            | Get a specific user by id.                 |
+|    GET    | /orderHistory/path/userId | Get a order history's path by given userId.|
+
+
+
   
