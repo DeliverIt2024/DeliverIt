@@ -153,5 +153,25 @@ Optional:
 ### Networking
 #### List of Network Request by Screen
 - Home Screen
-  -- (Read/GET) Query all orders where user is customer.
+   - (Read/GET) Query all orders where user is customer.
+ |----------------------------------------------------------------------------------|
+ |  let query = PFQuery(className: "Order")                                         |
+ |  query.whereKey("customer", equalTo: currentUser)                                |
+ |  query.order(byDescending: "createdAt")                                          |
+ |  query.findObjectsInBackground { (orders: [PFObject]?, error: Error?) in         |
+ |     if let error = error                                                         |
+ |     {                                                                            |
+ |         print("Error fetching orders: \(error.localizedDescription)")            |
+ |     }                                                                            |
+ |     else if let orders = orders                                                  |
+ |     {                                                                            |
+ |       print("Successfully retrieved \(orders.count) orders.")                    |
+ |       for order in orders {                                                      |
+ |           if let restaurantName = order["restaurantName"] as? String,            |
+ |              let status = order["status"] as? String {                           |
+ |               print("Order from \(restaurantName) - Status: \(status)")          |
+ |      }                                                                           |
+ |    }                                                                             |
+ |----------------------------------------------------------------------------------|
+     
   
