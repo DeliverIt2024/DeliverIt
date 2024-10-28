@@ -99,6 +99,9 @@ Optional:
 | `address`       | Object  | User’s shipping address (street, city, postal code). |
 | `phoneNumber`   | String  | Contact number of the user.                          |
 | `friends`       | Array   | List of users the user has friended                  |
+| `role`          | String  | determining whether user is a delivery driver or customer.|
+| `Order`         | Array   | List of orders if User is a Delivery driver.         |
+| `location`      |Geopoint | Location if the User is a Delivery driver.           |
 
 *Restaurants*
 
@@ -129,18 +132,7 @@ Optional:
 | `userId`        | String  | Reference to connect the table to a user.            |
 | `restaurants`   | Array   |List of restaurants the user frequents or rated highly.|
 
-*Delivery Driver*
-
-| Field Name      | Type    | Description                                          |
-|-----------------|---------|------------------------------------------------------|
-| `ddId`        | String  | Unique identifier for the DD.                          |
-| `email`         | String  | DD’s email address.                                  |
-| `name`          | String  | DD's full name.                                      |
-| `position`      |Geopoint | DD's current location if en route to a delivery.     |
-| `phoneNumber`   | String  | Contact number of the DD.                            |
-| `order`         | Object  | A reference to the order the DD is currently assigned to.|
-
-*Orders*
+*Order*
 
 | Field Name      | Type    | Description                                          |
 |-----------------|---------|------------------------------------------------------|
