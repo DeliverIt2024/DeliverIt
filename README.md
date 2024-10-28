@@ -122,7 +122,7 @@ Optional:
 | `Description`   | String  | Description of the menu item.                        |
 | `Category`      | String  | Category the menu item belongs to in the menu.       |
 
-*Users restaurant*
+*Users restaurants*
 
 | Field Name      | Type    | Description                                          |
 |-----------------|---------|------------------------------------------------------|
