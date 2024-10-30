@@ -1,7 +1,6 @@
 package edu.famu.deliverit.controller;
 
 import edu.famu.deliverit.model.Default.Chats;
-import edu.famu.deliverit.model.Default.Users;
 import edu.famu.deliverit.service.ChatsService;
 import edu.famu.deliverit.util.ApiResponse;
 import org.springframework.expression.ParseException;

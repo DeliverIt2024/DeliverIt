@@ -4,7 +4,6 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import edu.famu.deliverit.model.Admin;
-import edu.famu.deliverit.model.Default.Users;
 import edu.famu.deliverit.model.LoginRequest;
 import lombok.Data;
 import org.springframework.stereotype.Service;

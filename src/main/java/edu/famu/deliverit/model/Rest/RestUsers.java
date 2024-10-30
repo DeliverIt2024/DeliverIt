@@ -3,7 +3,6 @@ package edu.famu.deliverit.model.Rest;
 import com.google.cloud.Timestamp;
 import com.google.cloud.firestore.DocumentReference;
 import edu.famu.deliverit.model.Abstracts.AUsers;
-import edu.famu.deliverit.model.Default.Chats;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

@@ -1,7 +1,6 @@
 package edu.famu.deliverit.controller;
 
 import edu.famu.deliverit.model.Admin;
-import edu.famu.deliverit.model.Default.Users;
 import edu.famu.deliverit.model.LoginRequest;
 import edu.famu.deliverit.service.AdminService;
 import edu.famu.deliverit.util.ApiResponse;

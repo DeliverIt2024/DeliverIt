@@ -4,7 +4,6 @@ package edu.famu.deliverit.controller;
 //http://localhost:8080/api/order FOR POSTMAN
 
 import edu.famu.deliverit.model.Default.Orders;
-import edu.famu.deliverit.model.Default.Users;
 import edu.famu.deliverit.service.OrdersService;
 import edu.famu.deliverit.util.ApiResponse;
 import org.springframework.expression.ParseException;

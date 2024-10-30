@@ -2,7 +2,6 @@ package edu.famu.deliverit.model.Rest;
 
 import com.google.cloud.firestore.DocumentReference;
 import edu.famu.deliverit.model.Abstracts.AItems;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

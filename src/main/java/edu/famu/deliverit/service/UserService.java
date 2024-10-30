@@ -3,10 +3,7 @@ package edu.famu.deliverit.service;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
-import edu.famu.deliverit.model.Default.Chats;
-import edu.famu.deliverit.model.Default.Orders;
 import edu.famu.deliverit.model.Default.Users;
-import edu.famu.deliverit.model.Default.Vendors;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 

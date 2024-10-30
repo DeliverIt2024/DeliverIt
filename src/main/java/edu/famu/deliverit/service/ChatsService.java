@@ -6,8 +6,6 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import edu.famu.deliverit.model.Default.Chats;
 import edu.famu.deliverit.model.Default.Messages;
-import edu.famu.deliverit.model.Default.Orders;
-import edu.famu.deliverit.model.Default.Users;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 

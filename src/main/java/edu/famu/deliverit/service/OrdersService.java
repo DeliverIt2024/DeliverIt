@@ -3,16 +3,13 @@ package edu.famu.deliverit.service;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
-import edu.famu.deliverit.model.Default.Items;
 import edu.famu.deliverit.model.Default.Orders;
-import edu.famu.deliverit.model.Default.Users;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 @Service

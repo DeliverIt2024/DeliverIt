@@ -1,6 +1,5 @@
 package edu.famu.deliverit.controller;
 
-import edu.famu.deliverit.model.Default.Users;
 import edu.famu.deliverit.model.Default.Vendors;
 import edu.famu.deliverit.model.Rest.RestItems;
 import edu.famu.deliverit.model.Rest.RestVendors;

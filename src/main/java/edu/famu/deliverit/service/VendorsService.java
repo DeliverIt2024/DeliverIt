@@ -4,8 +4,6 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.Timestamp;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
-import edu.famu.deliverit.model.Default.Items;
-import edu.famu.deliverit.model.Default.Users;
 import edu.famu.deliverit.model.Default.Vendors;
 import edu.famu.deliverit.model.Rest.RestItems;
 import edu.famu.deliverit.model.Rest.RestVendors;

@@ -1,9 +1,6 @@
 package edu.famu.deliverit.model.Default;
 
-import com.google.cloud.firestore.annotation.DocumentId;
-
 import edu.famu.deliverit.model.Abstracts.AItems;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
