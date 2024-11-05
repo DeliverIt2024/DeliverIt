@@ -3,12 +3,16 @@ package edu.famu.deliverit.model.Default;
 import com.google.cloud.Timestamp;
 import edu.famu.deliverit.model.Abstracts.AUsers;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
 @Data
 @NoArgsConstructor
+@Getter
+@Setter
 
 public class Users extends AUsers {
     private List<String> orderHistory;

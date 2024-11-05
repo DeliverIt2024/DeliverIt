@@ -77,4 +77,14 @@ public class ChatsService {
 
         return chats;
     }
+    public boolean deleteChat(String chatId){
+        try {
+            DocumentReference productRef = firestore.collection(CHATS_COLLECTION).document(chatId);
+            productRef.delete().get(); // Delete document and wait for completion
+            return true; // Deletion successful
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+            return false; // Deletion failed
+        }
+    }
 }

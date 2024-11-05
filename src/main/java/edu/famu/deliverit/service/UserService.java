@@ -93,4 +93,14 @@ public class UserService {
         DocumentSnapshot userSnap = usersRef.get().get();
         return documentToUser(userSnap);
     }
+    public boolean deleteUser(String userId){
+        try {
+            DocumentReference productRef = firestore.collection(USERS_COLLECTION).document(userId);
+            productRef.delete().get(); // Delete document and wait for completion
+            return true; // Deletion successful
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+            return false; // Deletion failed
+        }
+    }
 }

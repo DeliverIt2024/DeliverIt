@@ -96,4 +96,14 @@ public class OrdersService {
 
         return orders;
     }
+    public boolean deleteChat(String orderId){
+        try {
+            DocumentReference productRef = firestore.collection(ORDER_COLLECTION).document(orderId);
+            productRef.delete().get(); // Delete document and wait for completion
+            return true; // Deletion successful
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+            return false; // Deletion failed
+        }
+    }
 }

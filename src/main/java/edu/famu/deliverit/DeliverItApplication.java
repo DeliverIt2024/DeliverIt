@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Objects;
 
 @SpringBootApplication
 public class DeliverItApplication {
@@ -17,7 +18,7 @@ public class DeliverItApplication {
         //This code links your firebase to java, but the line below this is what changes. It has to be the name of the class.
         ClassLoader loader = DeliverItApplication.class.getClassLoader();
 
-        File file = new File(loader.getResource("serviceAccountKey.json").getFile());
+        File file = new File(Objects.requireNonNull(loader.getResource("serviceAccountKey.json")).getFile());
 
         FileInputStream serviceAccount = new FileInputStream(file.getAbsolutePath());
 

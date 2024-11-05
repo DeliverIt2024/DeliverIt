@@ -1,13 +1,12 @@
-package edu.famu.deliverit.model;
+package edu.famu.deliverit.model.Default;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Setter
+@Getter
 
 public class Admin {
     //@DocumentId

@@ -125,5 +125,15 @@ public class VendorsService {
 
         return vendorWriteResult.get().getUpdateTime().toString(); // Return the update time
     }
+    public boolean deleteVendor(String vendorId){
+        try {
+            DocumentReference productRef = firestore.collection(VENDORS_COLLECTION).document(vendorId);
+            productRef.delete().get(); // Delete document and wait for completion
+            return true; // Deletion successful
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+            return false; // Deletion failed
+        }
+    }
 
 }

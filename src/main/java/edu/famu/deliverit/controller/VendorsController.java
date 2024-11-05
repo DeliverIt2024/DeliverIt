@@ -1,5 +1,6 @@
 package edu.famu.deliverit.controller;
 
+import com.google.cloud.firestore.DocumentReference;
 import edu.famu.deliverit.model.Default.Vendors;
 import edu.famu.deliverit.model.Rest.RestItems;
 import edu.famu.deliverit.model.Rest.RestVendors;
@@ -16,7 +17,8 @@ import java.util.concurrent.ExecutionException;
 @RestController
 @RequestMapping("/api/vendor")
 public class VendorsController {
-    private VendorsService service;
+    private final VendorsService service;
+
 
     public VendorsController(VendorsService service) {
         this.service = service;
@@ -75,6 +77,16 @@ public class VendorsController {
             return ResponseEntity.status(500).body(new ApiResponse<>(false, "Internal Server Error", null, e));
         } catch (InterruptedException e) {
             return ResponseEntity.status(503).body(new ApiResponse<>(false, "Unable to reach firebase", null, e));
+        }
+    }
+    @DeleteMapping("/delete")
+    public ResponseEntity<ApiResponse<String>> deleteVendor(@RequestParam String vendorId) {
+        boolean deleted = service.deleteVendor(vendorId);
+
+        if (deleted) {
+            return ResponseEntity.ok(new ApiResponse<>(true, "User deleted successfully", null, null));
+        } else {
+            return ResponseEntity.status(500).body(new ApiResponse<>(false, "Failed to delete user", null, null));
         }
     }
 }
