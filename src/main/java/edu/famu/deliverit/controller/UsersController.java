@@ -1,5 +1,6 @@
 package edu.famu.deliverit.controller;
 
+import edu.famu.deliverit.model.Default.Items;
 import edu.famu.deliverit.model.Default.Users;
 import edu.famu.deliverit.service.UserService;
 import edu.famu.deliverit.util.ApiResponse;
@@ -45,12 +46,34 @@ public class UsersController {
             if(user != null)
                 return ResponseEntity.ok(new ApiResponse<>(true, "User", user, null));
             else
-                return ResponseEntity.status(20).body(new ApiResponse<>(true, "User not found", null, null));
+                return ResponseEntity.status(204).body(new ApiResponse<>(true, "User not found", null, null));
 
         } catch (ParseException | ExecutionException | java.text.ParseException e){
             return ResponseEntity.status(500).body(new ApiResponse<>(false, "Internal Server Error", null, e));
         } catch (InterruptedException e){
             return ResponseEntity.status(503).body(new ApiResponse<>(false, "Unable to reach firebase", null, e));
+        }
+    }
+    @PostMapping("/add")
+    public ResponseEntity<ApiResponse<String>> addUser( @RequestBody Users user) {
+        try{
+            Users users = new Users();
+            users.setUserId(service.addUser(user));
+            users.setFavorites(users.getFavorites());
+            users.setChats(users.getChats());
+            users.setFriends(users.getFriends());
+            users.setEmail(users.getEmail());
+            users.setPassword((String)users.getPassword());
+            users.setOrderHistory(users.getOrderHistory());
+            users.setPhone(users.getPhone());
+            users.setCreatedAt(users.getCreatedAt());
+            users.setUsername(users.getUsername());
+            String id = service.addUser(user);
+            return ResponseEntity.status(201).body(new ApiResponse<>(true,"User created",id,null));
+        } catch (ExecutionException e){
+            return ResponseEntity.status(500).body(new ApiResponse<>(false,"Internal server error", null,e));
+        } catch (InterruptedException e){
+            return ResponseEntity.status(503).body(new ApiResponse<>(false,"Unable to reach firebase", null,e));
         }
     }
     @DeleteMapping("/delete")

@@ -1,6 +1,7 @@
 package edu.famu.deliverit.controller;
 
 import com.google.cloud.firestore.DocumentReference;
+import edu.famu.deliverit.model.Default.Users;
 import edu.famu.deliverit.model.Default.Vendors;
 import edu.famu.deliverit.model.Rest.RestItems;
 import edu.famu.deliverit.model.Rest.RestVendors;
@@ -47,7 +48,7 @@ public class VendorsController {
             if(vendor != null)
                 return ResponseEntity.ok(new ApiResponse<>(true, "Vendor", vendor, null));
             else
-                return ResponseEntity.status(20).body(new ApiResponse<>(true, "User not found", null, null));
+                return ResponseEntity.status(204).body(new ApiResponse<>(true, "User not found", null, null));
 
         } catch (ParseException | ExecutionException | java.text.ParseException e){
             return ResponseEntity.status(500).body(new ApiResponse<>(false, "Internal Server Error", null, e));
@@ -77,6 +78,26 @@ public class VendorsController {
             return ResponseEntity.status(500).body(new ApiResponse<>(false, "Internal Server Error", null, e));
         } catch (InterruptedException e) {
             return ResponseEntity.status(503).body(new ApiResponse<>(false, "Unable to reach firebase", null, e));
+        }
+    }
+    @PostMapping("/add")
+    public ResponseEntity<ApiResponse<String>> addVendor( @RequestBody Vendors vendor) {
+        try{
+            Vendors vendors = new Vendors();
+            vendors.setVendorId(service.addVendor(vendor));
+            vendors.setEmail(vendors.getEmail());
+            vendors.setName(vendors.getName());
+            vendors.setAddress(vendors.getAddress());
+            vendors.setMenu(vendors.getMenu());
+            vendors.setAverageRating(vendors.getAverageRating());
+            vendors.setPhone(vendors.getPhone());
+            vendors.setImageUrl(vendors.getImageUrl());
+            String id = service.addVendor(vendor);
+            return ResponseEntity.status(201).body(new ApiResponse<>(true,"User created",id,null));
+        } catch (ExecutionException e){
+            return ResponseEntity.status(500).body(new ApiResponse<>(false,"Internal server error", null,e));
+        } catch (InterruptedException e){
+            return ResponseEntity.status(503).body(new ApiResponse<>(false,"Unable to reach firebase", null,e));
         }
     }
     @DeleteMapping("/delete")

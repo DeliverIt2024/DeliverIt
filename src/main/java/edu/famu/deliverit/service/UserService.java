@@ -3,6 +3,7 @@ package edu.famu.deliverit.service;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import edu.famu.deliverit.model.Default.Orders;
 import edu.famu.deliverit.model.Default.Users;
 import lombok.Data;
 import org.springframework.stereotype.Service;
@@ -92,6 +93,11 @@ public class UserService {
         DocumentReference usersRef = firestore.collection(USERS_COLLECTION).document(userId);
         DocumentSnapshot userSnap = usersRef.get().get();
         return documentToUser(userSnap);
+    }
+    public String addUser(Users user) throws InterruptedException, ExecutionException {
+        ApiFuture<DocumentReference> writeResult =  firestore.collection(USERS_COLLECTION).add(user);
+        DocumentReference rs =  writeResult.get();
+        return rs.getId();
     }
     public boolean deleteUser(String userId){
         try {

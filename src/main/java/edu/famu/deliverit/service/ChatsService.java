@@ -4,6 +4,7 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.Timestamp;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import edu.famu.deliverit.model.Default.Admin;
 import edu.famu.deliverit.model.Default.Chats;
 import edu.famu.deliverit.model.Default.Messages;
 import lombok.Data;
@@ -76,6 +77,11 @@ public class ChatsService {
         });
 
         return chats;
+    }
+    public String addChat(Chats chat) throws InterruptedException, ExecutionException {
+        ApiFuture<DocumentReference> writeResult =  firestore.collection(CHATS_COLLECTION).add(chat);
+        DocumentReference rs =  writeResult.get();
+        return rs.getId();
     }
     public boolean deleteChat(String chatId){
         try {

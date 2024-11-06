@@ -1,14 +1,16 @@
 package edu.famu.deliverit.service;
 
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.Firestore;
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import edu.famu.deliverit.model.Default.Admin;
 import edu.famu.deliverit.model.Default.Items;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -22,7 +24,7 @@ public class ItemsService {
         this.firestore = FirestoreClient.getFirestore();
     }
 
-    private Items documentToAdmin(DocumentSnapshot document) throws ParseException {
+    private Items documentToItem(DocumentSnapshot document) throws ParseException {
         Items item = null;
 
         if(document.exists())
@@ -33,9 +35,33 @@ public class ItemsService {
             item.setName(document.getString("name"));
             item.setRating(document.getDouble("rating"));
             item.setPrice(document.getDouble("price"));
-            item.setVendorId(document.getReference().toString());
+            item.setVendorId(document.get("vendorId").toString());
         }
         return item;
+    }
+    public String addItem(Items item) throws InterruptedException, ExecutionException {
+        ApiFuture<DocumentReference> writeResult =  firestore.collection(ITEM_COLLECTION).add(item);
+        DocumentReference rs =  writeResult.get();
+        return rs.getId();
+    }
+    public List<Items> getAllItems() throws InterruptedException, ExecutionException {
+        CollectionReference itemCollection = firestore.collection(ITEM_COLLECTION);
+        ApiFuture<QuerySnapshot> querySnapshot = itemCollection.get();
+        List<QueryDocumentSnapshot> documents = querySnapshot.get().getDocuments();
+
+        List<Items> items = documents.size() == 0 ? null : new ArrayList<>();
+
+        documents.forEach(document -> {
+            Items item = null;
+            try {
+                item = documentToItem(document);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+            items.add(item);
+        });
+
+        return items;
     }
     public boolean deleteItem(String itemId) {
         try {

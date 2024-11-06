@@ -3,6 +3,7 @@ package edu.famu.deliverit.service;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import edu.famu.deliverit.model.Default.Items;
 import edu.famu.deliverit.model.Default.Orders;
 import lombok.Data;
 import org.springframework.stereotype.Service;
@@ -95,6 +96,11 @@ public class OrdersService {
         });
 
         return orders;
+    }
+    public String addOrder(Orders order) throws InterruptedException, ExecutionException {
+        ApiFuture<DocumentReference> writeResult =  firestore.collection(ORDER_COLLECTION).add(order);
+        DocumentReference rs =  writeResult.get();
+        return rs.getId();
     }
     public boolean deleteChat(String orderId){
         try {

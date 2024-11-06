@@ -3,6 +3,7 @@ package edu.famu.deliverit.controller;
 //http:localhost:8080/api/order
 //http://localhost:8080/api/order FOR POSTMAN
 
+import edu.famu.deliverit.model.Default.Items;
 import edu.famu.deliverit.model.Default.Orders;
 import edu.famu.deliverit.service.OrdersService;
 import edu.famu.deliverit.util.ApiResponse;
@@ -35,6 +36,25 @@ public class OrdersController {
             return ResponseEntity.status(500).body(new ApiResponse<>(false, "Internal Server Error", null, e));
         } catch (InterruptedException e){
             return ResponseEntity.status(503).body(new ApiResponse<>(false, "Unable to reach firebase", null, e));
+        }
+    }
+    @PostMapping("/add")
+    public ResponseEntity<ApiResponse<String>> addOrder( @RequestBody Orders order) {
+        try{
+            Orders orders = new Orders();
+            orders.setOrderId(service.addOrder(order));
+            orders.setTotalPrice(orders.getTotalPrice());
+            orders.setOrderDate(orders.getOrderDate());
+            orders.setUserId(orders.getUserId());
+            orders.setVendorId(orders.getUserId());
+            orders.setItems(orders.getItems());
+
+            String id = service.addOrder(order);
+            return ResponseEntity.status(201).body(new ApiResponse<>(true,"User created",id,null));
+        } catch (ExecutionException e){
+            return ResponseEntity.status(500).body(new ApiResponse<>(false,"Internal server error", null,e));
+        } catch (InterruptedException e){
+            return ResponseEntity.status(503).body(new ApiResponse<>(false,"Unable to reach firebase", null,e));
         }
     }
     @DeleteMapping("/delete")

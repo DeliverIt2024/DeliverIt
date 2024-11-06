@@ -1,5 +1,6 @@
 package edu.famu.deliverit.model.Default;
 
+import com.google.cloud.Timestamp;
 import edu.famu.deliverit.model.Abstracts.AOrders;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,8 @@ public class Orders extends AOrders {
     private String userId;
     private List<Items> items;
 
-    public Orders(String vendorId, String userId, List<Items> items) {
+    public Orders(String orderId, Timestamp orderDate, double totalPrice, String vendorId, String userId, List<Items> items) {
+        super(orderId, orderDate, totalPrice);
         this.vendorId = vendorId;
         this.userId = userId;
         this.items = items;

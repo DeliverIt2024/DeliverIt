@@ -1,5 +1,6 @@
 package edu.famu.deliverit.controller;
 
+import edu.famu.deliverit.model.Default.Admin;
 import edu.famu.deliverit.model.Default.Chats;
 import edu.famu.deliverit.service.ChatsService;
 import edu.famu.deliverit.util.ApiResponse;
@@ -30,6 +31,23 @@ public class ChatsController {
             return ResponseEntity.status(500).body(new ApiResponse<>(false, "Internal Server Error", null, e));
         } catch (InterruptedException e){
             return ResponseEntity.status(503).body(new ApiResponse<>(false, "Unable to reach firebase", null, e));
+        }
+    }
+    @PostMapping("/add")
+    public ResponseEntity<ApiResponse<String>> addChat( @RequestBody Chats chat) {
+        try{
+            Chats chats = new Chats();
+            chats.setChatId(service.addChat(chat));
+            chats.setUserIdOne(chats.getUserIdOne());
+            chats.setUserIdTwo(chats.getUserIdTwo());
+            chats.setMessages(chats.getMessages());
+
+            String id = service.addChat(chat);
+            return ResponseEntity.status(201).body(new ApiResponse<>(true,"User created",id,null));
+        } catch (ExecutionException e){
+            return ResponseEntity.status(500).body(new ApiResponse<>(false,"Internal server error", null,e));
+        } catch (InterruptedException e){
+            return ResponseEntity.status(503).body(new ApiResponse<>(false,"Unable to reach firebase", null,e));
         }
     }
     @DeleteMapping("/delete")

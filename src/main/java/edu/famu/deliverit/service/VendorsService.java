@@ -4,6 +4,7 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.Timestamp;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import edu.famu.deliverit.model.Default.Users;
 import edu.famu.deliverit.model.Default.Vendors;
 import edu.famu.deliverit.model.Rest.RestItems;
 import edu.famu.deliverit.model.Rest.RestVendors;
@@ -124,6 +125,11 @@ public class VendorsService {
         ApiFuture<WriteResult> vendorWriteResult = vendorRef.update("menu", FieldValue.arrayUnion(newItem));
 
         return vendorWriteResult.get().getUpdateTime().toString(); // Return the update time
+    }
+    public String addVendor(Vendors vendor) throws InterruptedException, ExecutionException {
+        ApiFuture<DocumentReference> writeResult =  firestore.collection(VENDORS_COLLECTION).add(vendor);
+        DocumentReference rs =  writeResult.get();
+        return rs.getId();
     }
     public boolean deleteVendor(String vendorId){
         try {
