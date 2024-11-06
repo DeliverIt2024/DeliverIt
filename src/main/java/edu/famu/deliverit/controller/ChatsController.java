@@ -2,6 +2,7 @@ package edu.famu.deliverit.controller;
 
 import edu.famu.deliverit.model.Default.Admin;
 import edu.famu.deliverit.model.Default.Chats;
+import edu.famu.deliverit.model.Rest.RestChats;
 import edu.famu.deliverit.service.ChatsService;
 import edu.famu.deliverit.util.ApiResponse;
 import org.springframework.expression.ParseException;
@@ -58,6 +59,17 @@ public class ChatsController {
             return ResponseEntity.ok(new ApiResponse<>(true, "User deleted successfully", null, null));
         } else {
             return ResponseEntity.status(500).body(new ApiResponse<>(false, "Failed to delete user", null, null));
+        }
+    }
+    @PutMapping("/{chatId}")
+    public ResponseEntity<ApiResponse<String>> updateChatInfo(@PathVariable String chatId, @RequestBody RestChats updatedChat) {
+        try {
+            String updateTime = service.updateChat(chatId, updatedChat);
+            return ResponseEntity.ok(new ApiResponse<>(true, "Chat updated successfully", updateTime, null));
+        } catch (ExecutionException e) {
+            return ResponseEntity.status(500).body(new ApiResponse<>(false, "Internal Server Error", null, e));
+        } catch (InterruptedException e) {
+            return ResponseEntity.status(503).body(new ApiResponse<>(false, "Unable to reach firebase", null, e));
         }
     }
 }

@@ -1,8 +1,10 @@
 package edu.famu.deliverit.service;
 
 import com.google.api.core.ApiFuture;
+import com.google.cloud.Timestamp;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import edu.famu.deliverit.model.Default.Admin;
 import edu.famu.deliverit.model.Default.Items;
 import edu.famu.deliverit.model.Default.Orders;
 import lombok.Data;
@@ -111,5 +113,21 @@ public class OrdersService {
             e.printStackTrace();
             return false; // Deletion failed
         }
+    }
+
+    public String updateOrderInfo(String orderId, Orders updatedOrder) throws InterruptedException, ExecutionException {
+        DocumentReference orderRef = firestore.collection(ORDER_COLLECTION).document(orderId);
+
+        ApiFuture<WriteResult> writeResult = orderRef.update(
+                "orderId", updatedOrder.getOrderId(),
+                "vendorId", updatedOrder.getVendorId(),
+                "userId", updatedOrder.getUserId(),
+                "orderDate", updatedOrder.getOrderDate(),
+                "totalPrice", updatedOrder.getTotalPrice(),
+                "items", updatedOrder.getItems(),
+                "updatedAt", Timestamp.now()
+        );
+
+        return writeResult.get().getUpdateTime().toString();
     }
 }

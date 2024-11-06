@@ -3,6 +3,7 @@ package edu.famu.deliverit.controller;
 import edu.famu.deliverit.model.Default.Admin;
 import edu.famu.deliverit.model.Default.Chats;
 import edu.famu.deliverit.model.Default.Items;
+import edu.famu.deliverit.model.Rest.RestItems;
 import edu.famu.deliverit.service.AdminService;
 import edu.famu.deliverit.service.ItemsService;
 import edu.famu.deliverit.util.ApiResponse;
@@ -64,6 +65,18 @@ public class ItemController {
             return ResponseEntity.ok(new ApiResponse<>(true, "User deleted successfully", null, null));
         } else {
             return ResponseEntity.status(500).body(new ApiResponse<>(false, "Failed to delete user", null, null));
+        }
+    }
+
+    @PutMapping("/{itemId}")
+    public ResponseEntity<ApiResponse<String>> updateItemInfo(@PathVariable String itemId, @RequestBody RestItems updatedItem) {
+        try {
+            String updateTime = service.updateItemInfo(itemId, updatedItem);
+            return ResponseEntity.ok(new ApiResponse<>(true, "Item info updated", updateTime, null));
+        } catch (ExecutionException e) {
+            return ResponseEntity.status(500).body(new ApiResponse<>(false, "Internal Server Error", null, e));
+        } catch (InterruptedException e) {
+            return ResponseEntity.status(503).body(new ApiResponse<>(false, "Unable to reach firebase", null, e));
         }
     }
 }

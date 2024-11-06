@@ -2,6 +2,7 @@ package edu.famu.deliverit.controller;
 
 import edu.famu.deliverit.model.Default.Items;
 import edu.famu.deliverit.model.Default.Users;
+import edu.famu.deliverit.model.Rest.RestUsers;
 import edu.famu.deliverit.service.UserService;
 import edu.famu.deliverit.util.ApiResponse;
 import org.springframework.expression.ParseException;
@@ -76,6 +77,7 @@ public class UsersController {
             return ResponseEntity.status(503).body(new ApiResponse<>(false,"Unable to reach firebase", null,e));
         }
     }
+
     @DeleteMapping("/delete")
     public ResponseEntity<ApiResponse<String>> deleteUser(@RequestParam String userId) {
         boolean deleted = service.deleteUser(userId);
@@ -84,6 +86,18 @@ public class UsersController {
             return ResponseEntity.ok(new ApiResponse<>(true, "User deleted successfully", null, null));
         } else {
             return ResponseEntity.status(500).body(new ApiResponse<>(false, "Failed to delete user", null, null));
+        }
+    }
+
+    @PutMapping("/{userId}")
+    public ResponseEntity<ApiResponse<String>> updateUserProfile(@PathVariable String userId, @RequestBody RestUsers updatedUser) {
+        try {
+            String updateTime = service.updateUserProfile(userId, updatedUser);
+            return ResponseEntity.ok(new ApiResponse<>(true, "User profile updated", updateTime, null));
+        } catch (ExecutionException e) {
+            return ResponseEntity.status(500).body(new ApiResponse<>(false, "Internal Server Error", null, e));
+        } catch (InterruptedException e) {
+            return ResponseEntity.status(503).body(new ApiResponse<>(false, "Unable to reach firebase", null, e));
         }
     }
 }

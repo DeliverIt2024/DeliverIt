@@ -3,6 +3,7 @@ package edu.famu.deliverit.controller;
 //http:localhost:8080/api/order
 //http://localhost:8080/api/order FOR POSTMAN
 
+import edu.famu.deliverit.model.Default.Admin;
 import edu.famu.deliverit.model.Default.Items;
 import edu.famu.deliverit.model.Default.Orders;
 import edu.famu.deliverit.service.OrdersService;
@@ -65,6 +66,18 @@ public class OrdersController {
             return ResponseEntity.ok(new ApiResponse<>(true, "User deleted successfully", null, null));
         } else {
             return ResponseEntity.status(500).body(new ApiResponse<>(false, "Failed to delete user", null, null));
+        }
+    }
+
+    @PutMapping("/{orderId}")
+    public ResponseEntity<ApiResponse<String>> updateOrderInfo(@PathVariable String orderId, @RequestBody Orders updatedOrder) {
+        try {
+            String updateTime = service.updateOrderInfo(orderId, updatedOrder);
+            return ResponseEntity.ok(new ApiResponse<>(true, "Admin info updated", updateTime, null));
+        } catch (ExecutionException e) {
+            return ResponseEntity.status(500).body(new ApiResponse<>(false, "Internal Server Error", null, e));
+        } catch (InterruptedException e) {
+            return ResponseEntity.status(503).body(new ApiResponse<>(false, "Unable to reach firebase", null, e));
         }
     }
 }

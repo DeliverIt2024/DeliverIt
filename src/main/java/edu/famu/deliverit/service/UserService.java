@@ -1,10 +1,12 @@
 package edu.famu.deliverit.service;
 
 import com.google.api.core.ApiFuture;
+import com.google.cloud.Timestamp;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import edu.famu.deliverit.model.Default.Orders;
 import edu.famu.deliverit.model.Default.Users;
+import edu.famu.deliverit.model.Rest.RestUsers;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
@@ -108,5 +110,26 @@ public class UserService {
             e.printStackTrace();
             return false; // Deletion failed
         }
+    }
+
+    public String updateUserProfile(String userId, RestUsers updatedUser) throws InterruptedException, ExecutionException {
+        DocumentReference userRef = firestore.collection(USERS_COLLECTION).document(userId);
+
+        ApiFuture<WriteResult> writeResult = userRef.update(
+                "username", updatedUser.getUsername(),
+                "phone", updatedUser.getPhone(),
+                "email", updatedUser.getEmail(),
+                "password", updatedUser.getPassword(),
+                "profilePhotoUrl", updatedUser.getProfilePhotoUrl(),
+
+                "orderHistory", updatedUser.getOrderHistory(),
+                "chats", updatedUser.getChats(),
+                "friends", updatedUser.getFriends(),
+                "favorites", updatedUser.getFavorites(),
+
+                "updatedAt", Timestamp.now() // Update the timestamp
+        );
+
+        return writeResult.get().getUpdateTime().toString(); // Returning the update time
     }
 }

@@ -1,12 +1,11 @@
 package edu.famu.deliverit.service;
 
 import com.google.api.core.ApiFuture;
+import com.google.cloud.Timestamp;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import edu.famu.deliverit.model.Default.Admin;
 import edu.famu.deliverit.model.LoginRequest;
-import edu.famu.deliverit.model.Rest.RestItems;
-import lombok.Data;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -95,4 +94,16 @@ public class AdminService {
         }
     }
 
+    public String updateAdminInfo(String adminId, Admin updatedAdmin) throws InterruptedException, ExecutionException {
+        DocumentReference adminRef = firestore.collection(ADMIN_COLLECTION).document(adminId);
+
+        ApiFuture<WriteResult> writeResult = adminRef.update(
+                "adminUser", updatedAdmin.getAdminUser(),
+                "email", updatedAdmin.getEmail(),
+                "password", updatedAdmin.getEmail(),
+                "updatedAt", Timestamp.now()
+        );
+
+        return writeResult.get().getUpdateTime().toString();
+    }
 }

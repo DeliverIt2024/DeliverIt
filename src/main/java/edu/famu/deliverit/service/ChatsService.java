@@ -7,6 +7,7 @@ import com.google.firebase.cloud.FirestoreClient;
 import edu.famu.deliverit.model.Default.Admin;
 import edu.famu.deliverit.model.Default.Chats;
 import edu.famu.deliverit.model.Default.Messages;
+import edu.famu.deliverit.model.Rest.RestChats;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
@@ -92,5 +93,19 @@ public class ChatsService {
             e.printStackTrace();
             return false; // Deletion failed
         }
+    }
+
+    public String updateChat(String chatId, RestChats updatedChat) throws InterruptedException, ExecutionException {
+        DocumentReference adminRef = firestore.collection(CHATS_COLLECTION).document(chatId);
+
+        ApiFuture<WriteResult> writeResult = adminRef.update(
+                "userIdOne", updatedChat.getUserIdOne(),
+                "userIdTwo", updatedChat.getUserIdTwo(),
+                "messages", updatedChat.getMessages(),
+
+                "updatedAt", Timestamp.now()
+        );
+
+        return writeResult.get().getUpdateTime().toString();
     }
 }
