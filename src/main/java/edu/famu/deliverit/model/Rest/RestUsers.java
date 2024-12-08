@@ -17,8 +17,8 @@ public class RestUsers extends AUsers {
     private List<DocumentReference> friends;
     private List<DocumentReference> favorites;
 
-    public RestUsers(String userId, String username, String phone, String email, String password, String profilePhotoUrl, Timestamp createdAt, List<DocumentReference> orderHistory, List<DocumentReference> chats, List<DocumentReference> friends, List<DocumentReference> favorites) {
-        super(userId, username, phone, email, password, profilePhotoUrl, createdAt);
+    public RestUsers(String userId, String username, String phone, String email, String password, String profilePhotoUrl, String firstName, String lastName, Timestamp createdAt, List<DocumentReference> orderHistory, List<DocumentReference> chats, List<DocumentReference> friends, List<DocumentReference> favorites) {
+        super(userId, username, phone, email, password, profilePhotoUrl, firstName, lastName, createdAt);
         this.orderHistory = orderHistory;
         this.chats = chats;
         this.friends = friends;

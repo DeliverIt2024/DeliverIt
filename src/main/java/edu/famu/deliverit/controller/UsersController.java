@@ -1,5 +1,6 @@
 package edu.famu.deliverit.controller;
 
+import edu.famu.deliverit.model.LoginRequest;
 import edu.famu.deliverit.model.Default.Items;
 import edu.famu.deliverit.model.Default.Users;
 import edu.famu.deliverit.model.Rest.RestUsers;
@@ -69,6 +70,8 @@ public class UsersController {
             users.setPhone(users.getPhone());
             users.setCreatedAt(users.getCreatedAt());
             users.setUsername(users.getUsername());
+            users.setFirstName(users.getFirstName());
+            users.setLastName(users.getLastName());
             String id = service.addUser(user);
             return ResponseEntity.status(201).body(new ApiResponse<>(true,"User created",id,null));
         } catch (ExecutionException e){
@@ -100,4 +103,24 @@ public class UsersController {
             return ResponseEntity.status(503).body(new ApiResponse<>(false, "Unable to reach firebase", null, e));
         }
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<Users>> loginUser(@RequestBody LoginRequest loginRequest) {
+        try {
+            Users user = service.loginUser(loginRequest.getEmail(), loginRequest.getPassword());
+
+            if (user != null) {
+                return ResponseEntity.ok(new ApiResponse<>(true, "Login successful", user, null));
+            } else {
+                return ResponseEntity.status(401).body(new ApiResponse<>(false, "Invalid email or password", null, null));
+            }
+        } catch (ExecutionException e) {
+            return ResponseEntity.status(500).body(new ApiResponse<>(false, "Internal server error", null, e));
+        } catch (InterruptedException e) {
+            return ResponseEntity.status(503).body(new ApiResponse<>(false, "Unable to reach Firebase", null, e));
+        } catch (ParseException | java.text.ParseException e) {
+            return ResponseEntity.status(500).body(new ApiResponse<>(false, "Error parsing user data", null, e));
+        }
+}
+
 }

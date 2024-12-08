@@ -19,6 +19,8 @@ public class AUsers {
     private String email;
     private String password;
     private String profilePhotoUrl;
+    private String firstName;
+    private String lastName;
     @JsonDeserialize(using = TimestampDeserializer.class)
     private Timestamp createdAt;
 

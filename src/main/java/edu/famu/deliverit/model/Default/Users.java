@@ -20,8 +20,8 @@ public class Users extends AUsers {
     private List<String> friends;
     private List<String> favorites;
 
-    public Users(String userId, String username, String phone, String email, String password, String profilePhotoUrl, Timestamp createdAt, List<String> orderHistory, List<String> chats, List<String> friends, List<String> favorites) {
-        super(userId, username, phone, email, password, profilePhotoUrl, createdAt);
+    public Users(String userId, String username, String phone, String email, String password, String profilePhotoUrl, String firstName, String lastName, Timestamp createdAt, List<String> orderHistory, List<String> chats, List<String> friends, List<String> favorites) {
+        super(userId, username, phone, email, password, profilePhotoUrl, firstName, lastName, createdAt);
         this.orderHistory = orderHistory;
         this.chats = chats;
         this.friends = friends;

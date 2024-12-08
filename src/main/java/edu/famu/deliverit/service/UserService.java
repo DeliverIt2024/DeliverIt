@@ -40,8 +40,10 @@ public class UserService {
             user.setPhone(document.getString("phone"));
             user.setEmail(document.getString("email"));
             user.setPassword(document.getString("password"));
-            user.setProfilePhotoUrl(document.getString("profilePhoto"));
+            user.setProfilePhotoUrl(document.getString("profilePhotoUrl"));
             user.setCreatedAt(document.getTimestamp("createdAt"));
+            user.setFirstName(document.getString("firstName"));
+            user.setLastName(document.getString("lastName"));
             user.setFriends(null);
             user.setOrderHistory(null);
             user.setChats(null);
@@ -127,9 +129,50 @@ public class UserService {
                 "friends", updatedUser.getFriends(),
                 "favorites", updatedUser.getFavorites(),
 
+                "firstName", updatedUser.getFirstName(),
+                "lastName", updatedUser.getLastName(),
+
                 "updatedAt", Timestamp.now() // Update the timestamp
         );
 
         return writeResult.get().getUpdateTime().toString(); // Returning the update time
     }
+
+    public Users loginUser(String email, String password) throws ExecutionException, InterruptedException, ParseException {
+        CollectionReference usersCollection = firestore.collection(USERS_COLLECTION);
+    
+        Query emailQuery = usersCollection.whereEqualTo("email", email);
+        ApiFuture<QuerySnapshot> emailQuerySnapshot = emailQuery.get();
+        List<QueryDocumentSnapshot> emailDocuments = emailQuerySnapshot.get().getDocuments();
+    
+        Query usernameQuery = usersCollection.whereEqualTo("username", email);
+        ApiFuture<QuerySnapshot> usernameQuerySnapshot = usernameQuery.get();
+        List<QueryDocumentSnapshot> usernameDocuments = usernameQuerySnapshot.get().getDocuments();
+    
+        List<QueryDocumentSnapshot> combinedResults = new ArrayList<>();
+        combinedResults.addAll(emailDocuments);
+    
+        for (QueryDocumentSnapshot usernameDoc : usernameDocuments) {
+            if (!emailDocuments.contains(usernameDoc)) {
+                combinedResults.add(usernameDoc);
+            }
+        }
+    
+        if (combinedResults.isEmpty()) {
+            return null;
+        }
+    
+        DocumentSnapshot document = combinedResults.get(0);
+        Users user = documentToUser(document);
+
+        System.out.println("User retrieved: " + (user != null ? user.getUserId() : "null"));
+
+        if (!user.getPassword().equals(password)) {
+            return null;
+        }
+    
+        return user;
+    }
+    
+    
 }
