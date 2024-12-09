@@ -66,6 +66,15 @@ public class ItemsService {
         return items;
     }
 
+    public Items getItemById(String itemId) throws InterruptedException, ExecutionException, ParseException {
+        DocumentReference itemRef = firestore.collection(ITEM_COLLECTION).document(itemId);
+        ApiFuture<DocumentSnapshot> documentSnapshot = itemRef.get();
+        DocumentSnapshot document = documentSnapshot.get();
+    
+        return document.exists() ? documentToItem(document) : null; 
+    }
+    
+
     public boolean deleteItem(String itemId) {
         try {
             DocumentReference productRef = firestore.collection(ITEM_COLLECTION).document(itemId);

@@ -6,6 +6,9 @@ import WelcomeScreen from "./components/screens/Welcome";
 import LoginScreen from "./components/screens/Login";
 import TaskbarNavigator from "./components/Taskbar";
 
+import EditProfileScreen from "./components/screens/EditProfile";
+import PastOrdersScreen from "./components/screens/PastOrders";
+
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -25,6 +28,8 @@ export default function App() {
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Taskbar" component={TaskbarNavigator} />
+        <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+        <Stack.Screen name="PastOrders" component={PastOrdersScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

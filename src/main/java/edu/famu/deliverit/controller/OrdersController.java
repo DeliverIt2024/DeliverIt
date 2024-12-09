@@ -39,6 +39,23 @@ public class OrdersController {
             return ResponseEntity.status(503).body(new ApiResponse<>(false, "Unable to reach firebase", null, e));
         }
     }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<ApiResponse<List<Orders>>> getOrdersByUserId(@PathVariable String userId) {
+        try {
+            List<Orders> orders = service.getOrdersByUserId(userId);
+            if (orders != null && !orders.isEmpty()) {
+                return ResponseEntity.ok(new ApiResponse<>(true, "User's Orders", orders, null));
+            } else {
+                return ResponseEntity.status(204).body(new ApiResponse<>(true, "No orders found for this user", null, null));
+            }
+        } catch (ParseException | ExecutionException e) {
+            return ResponseEntity.status(500).body(new ApiResponse<>(false, "Internal Server Error", null, e));
+        } catch (InterruptedException e) {
+            return ResponseEntity.status(503).body(new ApiResponse<>(false, "Unable to reach database", null, e));
+        }
+    }
+
     @PostMapping("/add")
     public ResponseEntity<ApiResponse<String>> addOrder( @RequestBody Orders order) {
         try{

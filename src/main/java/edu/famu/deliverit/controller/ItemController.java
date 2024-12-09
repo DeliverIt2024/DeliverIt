@@ -43,6 +43,7 @@ public class ItemController {
             return ResponseEntity.status(503).body(new ApiResponse<>(false,"Unable to reach firebase", null,e));
         }
     }
+
     @GetMapping("/")
     public ResponseEntity<ApiResponse<List<Items>>> getAllItems() {
         try{
@@ -57,6 +58,26 @@ public class ItemController {
             return ResponseEntity.status(503).body(new ApiResponse<>(false, "Unable to reach firebase", null, e));
         }
     }
+
+    @GetMapping("/{itemId}")
+    public ResponseEntity<ApiResponse<Items>> getItemById(@PathVariable String itemId) throws java.text.ParseException {
+        try {
+            Items item = service.getItemById(itemId);  
+            if (item != null) {
+                return ResponseEntity.ok(new ApiResponse<>(true, "Item found", item, null));
+            } else {
+                return ResponseEntity.status(404).body(new ApiResponse<>(false, "Item not found", null, null));
+            }
+        } catch (ExecutionException e) {
+            return ResponseEntity.status(500).body(new ApiResponse<>(false, "Internal Server Error", null, e));
+        } catch (InterruptedException e) {
+            return ResponseEntity.status(503).body(new ApiResponse<>(false, "Unable to reach Firebase", null, e));
+        } catch (ParseException e) {
+            return ResponseEntity.status(400).body(new ApiResponse<>(false, "Failed to parse item", null, e));
+        }
+    }
+
+
     @DeleteMapping("/delete")
     public ResponseEntity<ApiResponse<String>> deleteItem(@RequestParam String itemId) {
         boolean deleted = service.deleteItem(itemId);

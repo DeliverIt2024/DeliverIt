@@ -165,7 +165,7 @@ public class UserService {
         DocumentSnapshot document = combinedResults.get(0);
         Users user = documentToUser(document);
 
-        System.out.println("User retrieved: " + (user != null ? user.getUserId() : "null"));
+        System.out.println("User retrieved: " + (user != null ? user.getUserId() : "null") + "(UserService.java)");
 
         if (!user.getPassword().equals(password)) {
             return null;

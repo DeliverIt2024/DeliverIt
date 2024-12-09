@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, ActivityIndicator, Alert, Image, TouchableOpacity } from "react-native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
 
 const ProfileScreen = ({ navigation }) => {
   const [user, setUser] = useState(null);
@@ -9,6 +10,7 @@ const ProfileScreen = ({ navigation }) => {
 
   const fetchProfile = async () => {
     try {
+      setLoading(true); // Show loading spinner during fetch
       const userId = await AsyncStorage.getItem("userId");
       if (!userId) {
         Alert.alert("Error", "User not logged in.");
@@ -25,9 +27,15 @@ const ProfileScreen = ({ navigation }) => {
       console.error(error);
       Alert.alert("Error", "Something went wrong.");
     } finally {
-      setLoading(false);
+      setLoading(false); // Hide loading spinner after fetch
     }
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchProfile(); // Fetch profile data whenever screen regains focus
+    }, [])
+  );
 
   const handleSignOut = async () => {
     try {
@@ -40,12 +48,12 @@ const ProfileScreen = ({ navigation }) => {
     }
   };
 
-  useEffect(() => {
-    fetchProfile();
-  }, []);
-
   if (loading) {
-    return <ActivityIndicator size="large" color="#27AE60" />;
+    return (
+      <View style={styles.loaderContainer}>
+        <ActivityIndicator size="large" color="#27AE60" />
+      </View>
+    );
   }
 
   if (!user) {
@@ -55,7 +63,7 @@ const ProfileScreen = ({ navigation }) => {
       </View>
     );
   }
-  console.log("logged url", user.profilePhotoUrl);
+
   return (
     <View style={styles.container}>
       <Image
@@ -64,7 +72,10 @@ const ProfileScreen = ({ navigation }) => {
       />
       <Text style={styles.name}>{user.firstName} {user.lastName}</Text>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("EditProfile")}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("EditProfile", { user })}
+        >
           <View style={styles.buttonTextWrapper}>
             <Text style={[styles.buttonText, styles.textStroke]}>Edit Profile</Text>
             <Text style={styles.buttonText}>Edit Profile</Text>
@@ -100,6 +111,12 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#f5f5f5",
   },
+  loaderContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f5f5f5",
+  },
   profilePicture: {
     width: 150,
     height: 150,
@@ -109,9 +126,9 @@ const styles = StyleSheet.create({
     borderColor: "#27AE60",
   },
   name: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: "bold",
-    color: "#27AE60",
+    color: "#000",
     marginBottom: 30,
   },
   buttonContainer: {

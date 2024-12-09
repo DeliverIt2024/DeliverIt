@@ -16,6 +16,7 @@ import java.text.ParseException;
 
 public class AOrders {
     private String orderId;
+    
     @JsonDeserialize(using = TimestampDeserializer.class)
     private Timestamp orderDate;
     private double totalPrice;

@@ -51,6 +51,13 @@ public class OrdersService {
             } else if (userIdField instanceof String) {
                 order.setUserId((String) userIdField);
             }
+
+            List<String> itemIds = (List<String>) document.get("items");
+            if (itemIds != null) {
+                order.setItems(itemIds);  // Set the list of item IDs to the order
+            } else {
+                order.setItems(new ArrayList<>());  // Ensure items list is not null
+            }
             /*
             List<Map<String, Object>> items = (List<Map<String, Object>>) document.get("items");
             if (items != null) {
@@ -80,6 +87,27 @@ public class OrdersService {
         return order;
     }
 
+    public List<Orders> getOrdersByUserId(String userId) throws InterruptedException, ExecutionException {
+        CollectionReference ordersCollection = firestore.collection(ORDER_COLLECTION);
+        ApiFuture<QuerySnapshot> querySnapshot = ordersCollection.whereEqualTo("userId", userId).get();
+        List<QueryDocumentSnapshot> documents = querySnapshot.get().getDocuments();
+    
+        List<Orders> orders = documents.size() == 0 ? null : new ArrayList<>();
+    
+        documents.forEach(document -> {
+            Orders order = null;
+            try {
+                order = documentToOrder(document);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+            orders.add(order);
+        });
+    
+        return orders;
+    }
+
+    
     public List<Orders> getAllOrders() throws InterruptedException, ExecutionException {
         CollectionReference ordersCollection = firestore.collection(ORDER_COLLECTION);
         ApiFuture<QuerySnapshot> querySnapshot = ordersCollection.get();
