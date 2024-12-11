@@ -21,9 +21,6 @@ const TaskbarNavigator = () => (
           case "Chats":
             iconName = "notifications";
             break;
-          case "Search":
-            iconName = "search";
-            break;
           case "Home":
             iconName = "home";
             break;
@@ -61,8 +58,7 @@ const TaskbarNavigator = () => (
   >
     <Tab.Screen name="Map" component={Option3Screen} />
     <Tab.Screen name="Chats" component={Option1Screen} />
-    <Tab.Screen name="Search" component={Option5Screen} />
-    <Tab.Screen name="Home" component={Option2Screen} />
+    <Tab.Screen name="Home" component={Option5Screen} />
     <Tab.Screen name="Profile" component={Option4Screen} />
   </Tab.Navigator>
 );

@@ -20,9 +20,7 @@ const WelcomeScreen = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.button, styles.registerButton]}
-          onPress={() => {
-            /* Handle registration logic later */
-          }}
+          onPress={() => navigation.navigate("Register")}
         >
           <View style={styles.buttonTextWrapper}>
             <Text style={[styles.buttonText, styles.textStroke]}>Register</Text>

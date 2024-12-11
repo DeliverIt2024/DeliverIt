@@ -11,9 +11,9 @@ import java.util.Map;
 @NoArgsConstructor
 
 public class Vendors extends AVendors {
-    private ArrayList<Items> menu;
+    private ArrayList<String> menu;
 
-    public Vendors(String vendorId, String name, String phone, String email, Map<String, String> address, double averageRating, String imageUrl, ArrayList<Items> menu) {
+    public Vendors(String vendorId, String name, String phone, String email, Map<String, String> address, double averageRating, String imageUrl, ArrayList<String> menu) {
         super(vendorId, name, phone, email, address, averageRating, imageUrl);
         this.menu = menu;
     }

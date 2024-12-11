@@ -27,13 +27,13 @@ const ProfileScreen = ({ navigation }) => {
       console.error(error);
       Alert.alert("Error", "Something went wrong.");
     } finally {
-      setLoading(false); // Hide loading spinner after fetch
+      setLoading(false); 
     }
   };
 
   useFocusEffect(
     React.useCallback(() => {
-      fetchProfile(); // Fetch profile data whenever screen regains focus
+      fetchProfile(); 
     }, [])
   );
 
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     padding: 20,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#82E0AA",
   },
   loaderContainer: {
     flex: 1,
