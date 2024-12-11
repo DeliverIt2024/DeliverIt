@@ -141,4 +141,16 @@ public class ChatsService {
 
         return chats;
     }
+    public Chats getChatById(String chatId) throws ExecutionException, InterruptedException, ParseException {
+        DocumentReference chatRef = firestore.collection(CHATS_COLLECTION).document(chatId);
+        ApiFuture<DocumentSnapshot> future = chatRef.get();
+        DocumentSnapshot document = future.get();
+    
+        if (document.exists()) {
+            return documentToChats(document);
+        } else {
+            return null; // Chat not found
+        }
+    }
+    
 }

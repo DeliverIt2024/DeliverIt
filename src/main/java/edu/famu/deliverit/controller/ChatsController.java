@@ -92,4 +92,23 @@ public class ChatsController {
             throw new RuntimeException(e);
         }
     }
+    @GetMapping("/chat/{chatId}")
+    public ResponseEntity<ApiResponse<Chats>> getChatById(@PathVariable String chatId) throws java.text.ParseException {
+        try {
+            Chats chat = service.getChatById(chatId);
+
+            if (chat == null) {
+                return ResponseEntity.status(404).body(new ApiResponse<>(false, "Chat not found", null, null));
+            }
+
+            return ResponseEntity.ok(new ApiResponse<>(true, "Chat retrieved successfully", chat, null));
+        } catch (ExecutionException e) {
+            return ResponseEntity.status(500).body(new ApiResponse<>(false, "Internal Server Error", null, e));
+        } catch (InterruptedException e) {
+            return ResponseEntity.status(503).body(new ApiResponse<>(false, "Unable to reach firebase", null, e));
+        } catch (ParseException e) {
+            return ResponseEntity.status(500).body(new ApiResponse<>(false, "Data parsing error", null, e));
+        }
+    }
+
 }

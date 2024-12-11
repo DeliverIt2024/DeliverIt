@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ActivityIndicator, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ActivityIndicator,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
 const Option2Screen = () => {
   const [userId, setUserId] = useState(null);
   const [conversations, setConversations] = useState([]);
+  const [usernames, setUsernames] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigation = useNavigation();
 
-  // Fetch userId from AsyncStorage
   useEffect(() => {
     const fetchUserId = async () => {
       try {
@@ -26,171 +35,169 @@ const Option2Screen = () => {
     fetchUserId();
   }, []);
 
-  // Fetch chats using the userId
   useEffect(() => {
     if (!userId) return;
 
-    const fetchChats = async () => {
+    const fetchChatsAndUsers = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/chat/${userId}`);
-        if (!response.ok) {
-          throw new Error(`HTTP Error: ${response.status}`);
+        // Fetch all chats for the user
+        const chatResponse = await fetch(`http://localhost:8080/api/chat/${userId}`);
+        if (!chatResponse.ok) {
+          throw new Error(`HTTP Error: ${chatResponse.status}`);
         }
+        const chatData = await chatResponse.json();
 
-        const data = await response.json();
-        if (data.success && data.data) {
-          setConversations(data.data);
+        if (chatData.success && chatData.data) {
+          const filteredChats = chatData.data.filter(
+            (chat) => chat.userIdOne === userId || chat.userIdTwo === userId
+          );
+          setConversations(filteredChats);
+
+          // Fetch all users
+          const userResponse = await fetch(`http://localhost:8080/api/user/`);
+          if (!userResponse.ok) {
+            throw new Error(`HTTP Error: ${userResponse.status}`);
+          }
+          const userData = await userResponse.json();
+
+          if (userData.success && userData.data) {
+            const usernamesMap = userData.data.reduce((map, user) => {
+              map[user.userId] = user.username;
+              return map;
+            }, {});
+            setUsernames(usernamesMap);
+          } else {
+            throw new Error("Failed to fetch user information.");
+          }
         } else {
           setError("Failed to load chats.");
         }
       } catch (err) {
-        console.error("Error fetching chats:", err);
+        console.error("Error fetching data:", err);
         setError(err.message || "An error occurred.");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchChats();
+    fetchChatsAndUsers();
   }, [userId]);
 
   if (loading) {
     return (
-        <View style={styles.container}>
-          <ActivityIndicator size="large" color="#27AE60" />
-          <Text>Loading chats...</Text>
-        </View>
+      <View style={styles.loaderContainer}>
+        <ActivityIndicator size="large" color="#27AE60" />
+        <Text>Loading chats...</Text>
+      </View>
     );
   }
 
   if (error) {
     return (
-        <View style={styles.container}>
-          <Text style={styles.errorText}>Error: {error}</Text>
-        </View>
+      <View style={styles.container}>
+        <Text style={styles.errorText}>Error: {error}</Text>
+      </View>
     );
   }
 
   if (conversations.length === 0) {
     return (
-        <View style={styles.container}>
-          <Text>No conversations found.</Text>
-        </View>
+      <View style={styles.container}>
+        <Text>No conversations found.</Text>
+      </View>
     );
   }
 
-  const groupMessagesByUser = (messages) => {
-    const groupedMessages = [];
-    let currentUserId = null;
-    let currentMessages = [];
-
-    messages.forEach((message) => {
-      if (message.userId !== currentUserId) {
-        if (currentMessages.length > 0) {
-          groupedMessages.push({ userId: currentUserId, messages: currentMessages });
-        }
-        currentUserId = message.userId;
-        currentMessages = [];
-      }
-      currentMessages.push(message);
-    });
-
-    if (currentMessages.length > 0) {
-      groupedMessages.push({ userId: currentUserId, messages: currentMessages });
-    }
-
-    return groupedMessages;
-  };
-
   return (
-      <View style={styles.container}>
-        <FlatList
-            data={conversations}
-            keyExtractor={(item) => item.chatId}
-            renderItem={({ item }) => (
-                <View style={styles.chatContainer}>
-                  <Text style={styles.chatHeader}>
-                    Chat with: {item.userIdOne === userId ? item.userIdTwo : item.userIdOne}
-                  </Text>
-                  {groupMessagesByUser(item.messages).map((group, index) => (
-                      <View key={index} style={styles.messageGroup}>
-                        <Text style={styles.messageGroupHeader}>
-                          {group.userId === userId ? "You" : group.userId}
-                        </Text>
-                        {group.messages.map((message, msgIndex) => (
-                            <View
-                                key={msgIndex}
-                                style={[
-                                  styles.messageContainer,
-                                  message.userId === userId ? styles.messageRight : styles.messageLeft,
-                                ]}
-                            >
-                              <Text style={styles.messageText}>
-                                {message.text || "No text found!"} {/* Accessing the correct property */}
-                              </Text>
-                            </View>
-                        ))}
-                      </View>
-                  ))}
-                </View>
-            )}
-        />
+    <View style={styles.container}>
+      <View style={styles.headerContainer}>
+        <View style={styles.textStrokeContainer}>
+          <Text style={[styles.header, styles.textStroke]}>Chats</Text>
+          <Text style={styles.header}>Chats</Text>
+        </View>
       </View>
+      <FlatList
+        data={conversations}
+        keyExtractor={(item) => item.chatId}
+        renderItem={({ item }) => {
+          const otherUserId = item.userIdOne === userId ? item.userIdTwo : item.userIdOne;
+          const username = usernames[otherUserId] || "Unknown User";
+          return (
+            <TouchableOpacity
+              style={styles.chatCard}
+              onPress={() => navigation.navigate("ChatScreen", { chatId: item.chatId })}
+            >
+              <Text style={styles.chatHeader}>Chat with: {username}</Text>
+              <Text style={styles.chatDetails}>Click to view messages</Text>
+            </TouchableOpacity>
+          );
+        }}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#82E0AA",
+  },
+  loaderContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#82E0AA",
+  },
+  headerContainer: {
+    backgroundColor: "#27AE60",
+    paddingVertical: 15,
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#F7DC6F",
+    textAlign: "center",
+    width: "100%",
+  },
+  textStrokeContainer: {
+    position: "relative",
+    alignItems: "center",
+  },
+  textStroke: {
+    position: "absolute",
+    color: "transparent",
+    textShadowColor: "#000",
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 1,
   },
   errorText: {
     color: "red",
     fontSize: 16,
     textAlign: "center",
   },
-  chatContainer: {
-    marginBottom: 20,
+  chatCard: {
     backgroundColor: "#fff",
-    borderRadius: 8,
-    padding: 10,
+    padding: 15,
+    marginHorizontal: 15,
+    marginVertical: 10,
+    borderRadius: 12,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 5,
   },
   chatHeader: {
     fontSize: 18,
     fontWeight: "bold",
-    marginBottom: 10,
+    color: "#333",
   },
-  messageGroup: {
-    marginBottom: 15,
-  },
-  messageGroupHeader: {
-    fontSize: 16,
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
-  messageContainer: {
-    marginVertical: 5,
-    padding: 10,
-    borderRadius: 8,
-    maxWidth: "70%",
-    backgroundColor: "#f0f0f0", // Set a neutral background color
-  },
-  messageRight: {
-    alignSelf: "flex-end",
-    backgroundColor: "#27AE60", // Green background for user messages
-  },
-  messageLeft: {
-    alignSelf: "flex-start",
-    backgroundColor: "#d3d3d3", // Grey background for other user messages
-  },
-  messageText: {
-    color: "#000", // Set text color to black for better visibility
+  chatDetails: {
+    fontSize: 14,
+    color: "#666",
+    marginTop: 5,
   },
 });
 
