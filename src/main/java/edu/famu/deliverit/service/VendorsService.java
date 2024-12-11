@@ -46,9 +46,6 @@ public class VendorsService {
 
             vendor.setAverageRating(document.getDouble("averageRating"));
             vendor.setImageUrl(document.getString("imageUrl"));
-            vendor.setMenu((ArrayList<String>)document.get("menu"));
-            //ArrayList<String> menu = document.get("menu", ArrayList.class);
-            //vendor.setMenu(menu);
 
             /*
             List<Map<String, Object>> menuData = (List<Map<String, Object>>) document.get("menu");

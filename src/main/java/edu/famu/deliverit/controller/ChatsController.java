@@ -72,4 +72,24 @@ public class ChatsController {
             return ResponseEntity.status(503).body(new ApiResponse<>(false, "Unable to reach firebase", null, e));
         }
     }
+    @GetMapping("/{userId}")
+    public ResponseEntity<ApiResponse<List<Chats>>> getUserChats(@PathVariable String userId) {
+        try {
+            List<Chats> chats = service.userChats(userId);
+
+            if (chats.isEmpty()) {
+                return ResponseEntity.status(204).body(new ApiResponse<>(true, "No chats found for user", null, null));
+            }
+
+            return ResponseEntity.ok(new ApiResponse<>(true, "User's Chats List", chats, null));
+        } catch (ExecutionException e) {
+            return ResponseEntity.status(500).body(new ApiResponse<>(false, "Internal Server Error", null, e));
+        } catch (InterruptedException e) {
+            return ResponseEntity.status(503).body(new ApiResponse<>(false, "Unable to reach firebase", null, e));
+        } catch (ParseException e) {
+            return ResponseEntity.status(500).body(new ApiResponse<>(false, "Data parsing error", null, e));
+        } catch (java.text.ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -56,9 +56,8 @@ const TaskbarNavigator = () => (
       headerShown: false, 
     })}
   >
-    <Tab.Screen name="Map" component={Option3Screen} />
+      <Tab.Screen name="Home" component={Option5Screen} />
     <Tab.Screen name="Chats" component={Option1Screen} />
-    <Tab.Screen name="Home" component={Option5Screen} />
     <Tab.Screen name="Profile" component={Option4Screen} />
   </Tab.Navigator>
 );

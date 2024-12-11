@@ -108,4 +108,37 @@ public class ChatsService {
 
         return writeResult.get().getUpdateTime().toString();
     }
+    public List<Chats> userChats(String userId) throws InterruptedException, ExecutionException, ParseException {
+        CollectionReference chatsCollection = firestore.collection(CHATS_COLLECTION);
+
+        // Query to filter documents where userOne or userTwo matches the userId
+        ApiFuture<QuerySnapshot> querySnapshot = chatsCollection
+                .whereEqualTo("userOne", userId)
+                .get();
+
+        List<QueryDocumentSnapshot> documents = querySnapshot.get().getDocuments();
+
+        // Check for matches in "userTwo" as well
+        ApiFuture<QuerySnapshot> querySnapshotTwo = chatsCollection
+                .whereEqualTo("userTwo", userId)
+                .get();
+
+        List<QueryDocumentSnapshot> documentsTwo = querySnapshotTwo.get().getDocuments();
+
+        List<Chats> chats = new ArrayList<>();
+
+        // Process documents from both queries
+        for (QueryDocumentSnapshot document : documents) {
+            chats.add(documentToChats(document));
+        }
+
+        for (QueryDocumentSnapshot document : documentsTwo) {
+            // Avoid duplicates if a chat matches both conditions
+            if (documents.stream().noneMatch(d -> d.getId().equals(document.getId()))) {
+                chats.add(documentToChats(document));
+            }
+        }
+
+        return chats;
+    }
 }
