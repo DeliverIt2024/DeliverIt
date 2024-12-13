@@ -170,6 +170,11 @@ Optional:
 |    GET    | /user/byId/:id            | Get a specific user by id.                 |
 |    GET    | /orderHistory/path/userId | Get a order history's path by given userId.|
 
+![image](https://github.com/user-attachments/assets/41f867a6-dfa4-49b2-be12-94aa98a46e02)
+
+I can't test the app anymore and I'm not sure how to fix it, so I can't get the gifs or update anything.
+
+
 
 
   
